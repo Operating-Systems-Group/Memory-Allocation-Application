@@ -14,7 +14,7 @@ Samreen Abbasi (She/Her) - Email: sabba027@fiu.edu
 
 Shabazuddin Mohammad (He/Him/His) - Email: smoha102@fiu.edu
 
-Github Repository: [https://github.com/Operating-Systems-Group/Multithreaded-Sorting-Application/tree/main](https://github.com/KhalidFatani/Contiguous-Memory-Allocation-Program/tree/main)
+Github Repository: https://github.com/Operating-Systems-Group/Memory-Allocation-Application/blob/main
 
 _____________________________________________________________________________________________________________
 Elizabeth Fassler: 
