@@ -1,17 +1,25 @@
-//Needs to be updated
-CC = gcc
-CFLAGS = -Wall -pthread
-TARGET = sorting
-SRCS = sorting.c
+all: main
+
+CC = clang
+override CFLAGS += -g -Wno-everything -pthread -lm
+
+SRCS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.c' -print)
 OBJS = $(SRCS:.c=.o)
+DEPS = $(SRCS:.c=.d)
 
-all: $(TARGET)
+%.d: %.c
+	@set -e; rm -f $@; \
+	$(CC) -MM $(CFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+include $(DEPS)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+main: $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o "$@"
+
+main-debug: $(OBJS)
+	$(CC) $(CFLAGS) -O0 $(OBJS) -o "$@"
 
 clean:
-	rm -f $(TARGET) $(OBJS)
+	rm -f $(OBJS) $(DEPS) main main-debug
