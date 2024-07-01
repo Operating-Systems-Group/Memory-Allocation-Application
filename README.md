@@ -35,6 +35,24 @@ ________________________________________________________________________________
 _____________________________________________________________________________________________________________
 ### Run Commands in Terminal
 
+***Clean previous build***
+```sh
+rm -rf make-build-debug
+```
+
+***Compile program***
+```sh
+make
+```
+
+```sh
+gcc -o memory_simulation main.c -lm
+```
+
+Execute compiled binary with arguments
+```sh
+./memory_simulation -x 1000 -n 24 -d 20 -v 18
+```
 
 _____________________________________________________________________________________________________________
 ### Introduction
