@@ -18,18 +18,20 @@ Github Repository: https://github.com/Operating-Systems-Group/Memory-Allocation-
 
 _____________________________________________________________________________________________________________
 Elizabeth Fassler: 
-- Finished and updated memory.c file.
+- Create project repository
+- Finished and updated memory.c file, and tested application.
+- Created the command lines for the application.
 - Designed a working Makefile.
 _____________________________________________________________________________________________________________
 Khalid Fatani: 
-- Created team project repository and readme file on Github.
-- Wrote basic pseudocode.
-- Worked on memory.c file.
+- Created readme file for application.
+- Scheduled Zoom Meeting
+- Wrote the starting and basic pseudocode for memory.c file.
 - Created video for programming assignment 3.
 _____________________________________________________________________________________________________________
 ### Meetings
 
-
+07/02/2024 Zoom Meeting at 6:30 PM
 _____________________________________________________________________________________________________________
 ### Run Commands in Terminal
 
