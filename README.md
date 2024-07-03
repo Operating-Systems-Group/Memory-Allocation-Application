@@ -42,13 +42,6 @@ make
 ```sh
 ./testmem
 ```
-
-If mmap isn't supported, use the following commands to install:
-
-```sh
-
-```
-
 _____________________________________________________________________________________________________________
 ### Introduction
 
