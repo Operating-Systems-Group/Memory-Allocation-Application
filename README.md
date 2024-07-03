@@ -41,12 +41,12 @@ make
 ```
 
 ```sh
-gcc -o memory_simulation main.c -lm
+
 ```
 
 ***Execute compiled binary with arguments***
 ```sh
-./memory_simulation -x 1000 -n 24 -d 20 -v 18
+./main -x 1000 -n 24 -d 20 -v 18
 ```
 
 _____________________________________________________________________________________________________________
