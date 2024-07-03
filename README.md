@@ -44,6 +44,7 @@ make
 ```
 
 <img width="569" alt="Screenshot 2024-07-02 at 11 01 26 PM" src="https://github.com/Operating-Systems-Group/Memory-Allocation-Application/assets/128157075/576ed1e2-a4af-41a7-81a7-fc6032a56d75">
+
 _____________________________________________________________________________________________________________
 ### Introduction
 
