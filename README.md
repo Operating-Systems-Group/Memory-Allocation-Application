@@ -45,6 +45,104 @@ make
 
 <img width="569" alt="Screenshot 2024-07-02 at 11 01 26 PM" src="https://github.com/Operating-Systems-Group/Memory-Allocation-Application/assets/128157075/576ed1e2-a4af-41a7-81a7-fc6032a56d75">
 
+In the initial memory allocation, this allocation attempt fails because the memory allocator has not been initialized yet.
+```sh
+allocate memory of size=1000 bytes... failed
+```
+
+Mem_Init is called with a region size of 10 KB (10240 bytes) and the policy MEM_POLICY_FIRSTFIT. This initialization succeeds.
+```sh
+init memory allocator... success!
+```
+
+A second call to Mem_Init correctly fails because the allocator has already been initialized.
+```sh
+init memory allocator, again... failed, but this is expected behavior!
+```
+
+The program allocates various sizes of memory and prints the success status along with the fragmentation factor:
+```sh
+allocate memory of size=64 bytes... success (p=0x7fdc6ab19000, f=1)
+allocate memory of size=200 bytes... success (p=0x7fdc6ab19400, f=1)
+allocate memory of size=64 bytes... success (p=0x7fdc6ab19108, f=1)
+allocate memory of size=100 bytes... success (p=0x7fdc6ab19148, f=1)
+allocate memory of size=64 bytes... success (p=0x7fdc6ab191ac, f=1)
+allocate memory of size=100000 bytes... failed
+allocate memory of size=64 bytes... success (p=0x7fdc6ab191ec, f=1)
+allocate memory of size=500 bytes... success (p=0x7fdc6ab1922c, f=1)
+allocate memory of size=64 bytes... success (p=0x7fdc6ab19420, f=1)
+```
+Each successful allocation prints the pointer returned and the fragmentation factor. A failed allocation attempt is also shown, which occurs when trying to allocate more memory than available (100000 bytes).
+
+It frees various allocated blocks and prints the success status along with the fragmentation factor:
+```sh
+free memory at p=0x7fdc6ab19400... success (f=0.982407)
+free memory at p=0x7fdc6ab1940a... failed
+free memory at p=0x7fdc6ab19152... success (f=0.97384)
+free memory at p=(nil)... success (f=0.97384)
+```
+Each successful free operation prints the fragmentation factor after the memory is freed. An attempt to free an invalid address also results in a failure.
+
+The program continues to allocate and free memory blocks:
+```sh
+allocate memory of size=50 bytes... success (p=0x7fdc6ab19040, f=0.978105)
+free memory at p=(nil)... success (f=0.978105)
+free memory at p=0x7fdc6ab19000... success (f=0.972653)
+free memory at p=0x7fdc6ab19108... success (f=0.967261)
+free memory at p=0x7fdc6ab191b6... success (f=0.961929)
+free memory at p=0x7fdc6ab191ec... success (f=0.956656)
+free memory at p=0x7fdc6ab19420... success (f=0.956656)
+free memory at p=0x7fdc6ab1922c... success (f=0.99477)
+free memory at p=0x7fdc6ab19400... success (f=1)
+```
+
+### Functions and Usages in Program
+
+***Node Structure:***
+- Holds a pointer to an address, the size of the block, and a pointer to the next node.
+- Implements a linked list for memory management.
+
+***List Structure:***
+- Tracks the linked list of memory blocks.
+- Contains a head pointer and a variable for the remaining allocatable memory.
+
+***Mem_Init:***
+- Initializes the memory allocator with a given size and policy.
+- Sets global variables initFlag and policySet.
+- Adjusts the requested size to be a multiple of the system page size.
+- Uses mmap to allocate zero-initialized memory using /dev/zero.
+- Returns -1 on failure (if mapping fails or already initialized), otherwise 0.
+
+***Mem_Alloc:***
+- Allocates a memory block of the requested size.
+- Ensures the memory allocator is initialized; returns NULL if not.
+- Uses a linked list to track allocated blocks.
+- Supports First Fit, Best Fit, and Worst Fit policies:
+-- First Fit: Allocates the first sufficiently large block found.
+-- Best Fit: Allocates the smallest block that fits the request.
+--Worst Fit: Allocates the largest block available.
+- Updates the linked list and hides implementation details from the user.
+- Returns the address of the allocated block or NULL if allocation fails.
+
+***Mem_Free:***
+- Frees the memory block at the given pointer.
+- Updates the linked list by removing the corresponding node.
+- Uses munmap to deallocate the memory.
+- Returns 0 on success, -1 if the pointer is invalid.
+
+***Mem_IsValid:***
+- Checks if the given pointer is within the allocated memory blocks.
+- Returns 1 if valid, otherwise 0.
+
+***Mem_GetSize:***
+- Returns the size of the allocated block containing the given pointer.
+- Returns -1 if the pointer is not found within the blocks.
+
+***Mem_GetFragmentation:***
+- Calculates and returns the fragmentation factor.
+- Finds the largest free memory block and compares it to the total free memory.
+- Returns 1 if no free space is available.
+
 _____________________________________________________________________________________________________________
 ### Introduction
 
