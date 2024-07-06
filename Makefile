@@ -7,7 +7,7 @@ libmem:
 	$(CC) -shared -o libmem.so mem.o
 
 test:
-	$(CC) testmem.c -lmem -lm -L. -o testmem
+	$(CC) testmem.c -lmem -lm -L. -Wl,-rpath=. -o testmem
 
 clean:
 	rm *.so *.o testmem
